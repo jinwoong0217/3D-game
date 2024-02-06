@@ -9,35 +9,24 @@ public class Player : MonoBehaviour
     PlayerInputActions inputActions;
     Rigidbody rigid;
     Animator animator;
+    
 
-    /// <summary>
-    /// 이동 방향(1 : 전진, -1 : 후진, 0 : 정지)
-    /// </summary>
     float moveDirection = 0.0f;
 
-    /// <summary>
-    /// 이동 속도
-    /// </summary>
     public float moveSpeed = 5.0f;
 
-    /// <summary>
-    /// 회전방향(1 : 우회전, -1 : 좌회전, 0 : 정지)
-    /// </summary>
     float rotateDirection = 0.0f;
 
-    /// <summary>
-    /// 회전 속도
-    /// </summary>
     public float rotateSpeed = 180.0f;
 
-    /// <summary>
-    /// 애니메이터용 해시값
-    /// </summary>
     readonly int IsMoveHash = Animator.StringToHash("IsMove");
+
+    public PoolObjectType bulletType = PoolObjectType.Bullet;
+    protected Transform fireTransform;
+    public GameObject bulletPrefab;
 
     private void Awake()
     {
-        //inputActions = new PlayerInputActions();
         inputActions = new();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -48,13 +37,47 @@ public class Player : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMoveInput;
         inputActions.Player.Move.canceled += OnMoveInput;
+        inputActions.Player.Shooting.performed += OnShootingInput;
+        inputActions.Player.Shooting.canceled += OnShootingInput;
+        inputActions.Player.Zoom.performed += OnZoomInput;
+        inputActions.Player.Zoom.canceled += OnZoomInput;
     }
 
     private void OnDisable()
     {
+        inputActions.Player.Zoom.canceled -= OnZoomInput;
+        inputActions.Player.Zoom.performed -= OnZoomInput;
+        inputActions.Player.Shooting.canceled -= OnShootingInput;
+        inputActions.Player.Shooting.performed -= OnShootingInput;
         inputActions.Player.Move.canceled -= OnMoveInput;
         inputActions.Player.Move.performed -= OnMoveInput;
         inputActions.Player.Disable();
+    }
+
+    private void OnZoomInput(InputAction.CallbackContext context)
+    {
+    }
+
+
+    private void OnShootingInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (bulletPrefab != null)
+            {       
+                GameObject bullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
+                bullet.GetComponent<Bullet>().Fire(); 
+            }
+        }
+
+        else if (context.canceled)
+        {
+            if (bulletPrefab != null)
+            {
+                GameObject bullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
+                bullet.GetComponent<Bullet>().StopFiring();
+            }
+        }
     }
 
     private void OnMoveInput(InputAction.CallbackContext context)

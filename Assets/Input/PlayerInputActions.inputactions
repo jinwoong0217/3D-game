@@ -15,47 +15,25 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
+                    "name": "Zoom",
                     "type": "Button",
-                    "id": "9d1936f9-5ebc-4890-847a-29a4c01fb13f",
+                    "id": "6ddef756-3264-42a7-af7a-f62002a1a4fa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "Use",
+                    "name": "Shooting",
                     "type": "Button",
-                    "id": "5326eddb-b708-4e9d-9df3-5bd8104f3857",
+                    "id": "18673c04-2850-40b5-bad6-c702bd349204",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "8e00e8b4-8493-4b0f-938f-86a392ccde73",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3618195e-7088-4d09-ae85-3e5c6affa81f",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "Use",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "WASD",
                     "id": "7b8adb16-27f1-43e0-9932-1e6081a9e419",
@@ -165,6 +143,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3826805d-03eb-4da3-b9ad-b69d2a050027",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25878a02-4efd-437c-a400-eab7f84f5981",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Shooting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

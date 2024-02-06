@@ -18,7 +18,7 @@ public class Factory : Singleton<Factory>
         bulletPool = GetComponentInChildren<BulletPool>();
         if (bulletPool != null) bulletPool.Initialize();
     }
- 
+
     /// <summary>
     /// 풀에 있는 게임 오브젝트 하나 가져오기
     /// </summary>
