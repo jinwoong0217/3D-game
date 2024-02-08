@@ -44,16 +44,4 @@ public class Bullet : RecycleObject
             transform.forward = rigid.velocity;
         }
     }
-
-    public void Fire()
-    {
-        isFiring = true;
-        rigid.velocity = initialSpeed * transform.forward;
-    }
-
-    public void StopFiring()
-    {
-        isFiring = false;
-        rigid.velocity = Vector3.zero;
-    }
 }

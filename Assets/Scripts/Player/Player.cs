@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     PlayerInputActions inputActions;
     Rigidbody rigid;
     Animator animator;
-    
+
+    public float bulletSpeed = 20.0f;
 
     float moveDirection = 0.0f;
 
@@ -23,13 +24,14 @@ public class Player : MonoBehaviour
 
     public PoolObjectType bulletType = PoolObjectType.Bullet;
     protected Transform fireTransform;
-    public GameObject bulletPrefab;
+
 
     private void Awake()
     {
         inputActions = new();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        fireTransform = GetComponent<Transform>();
     }
 
     private void OnEnable()
@@ -63,22 +65,24 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            if (bulletPrefab != null)
-            {       
-                GameObject bullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
-                bullet.GetComponent<Bullet>().Fire(); 
-            }
+            ShootBullet();
         }
-
         else if (context.canceled)
         {
-            if (bulletPrefab != null)
-            {
-                GameObject bullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
-                bullet.GetComponent<Bullet>().StopFiring();
-            }
+            StopShooting();
         }
     }
+    private void ShootBullet()
+    {
+        GameObject bulletObject = Factory.Instance.GetObject(bulletType, fireTransform.position, fireTransform.eulerAngles);
+
+    }
+
+    private void StopShooting()
+    {
+        Debug.Log("총알 발사를 멈췄습니다.");
+    }
+
 
     private void OnMoveInput(InputAction.CallbackContext context)
     {
