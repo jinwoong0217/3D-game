@@ -15,19 +15,19 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Zoom",
+                    "name": "Shooting",
                     "type": "Button",
-                    "id": "6ddef756-3264-42a7-af7a-f62002a1a4fa",
+                    "id": "18673c04-2850-40b5-bad6-c702bd349204",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Shooting",
-                    "type": "Button",
-                    "id": "18673c04-2850-40b5-bad6-c702bd349204",
-                    "expectedControlType": "Button",
+                    "name": "MouseMove",
+                    "type": "Value",
+                    "id": "8416d4f6-8d10-417b-8a66-898fecec8853",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -146,23 +146,23 @@
                 },
                 {
                     "name": "",
-                    "id": "3826805d-03eb-4da3-b9ad-b69d2a050027",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "25878a02-4efd-437c-a400-eab7f84f5981",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KM",
                     "action": "Shooting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4fe0c790-d0f1-4fea-82c7-7cfcec7758d8",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "MouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

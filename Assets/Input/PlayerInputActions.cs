@@ -37,19 +37,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Zoom"",
+                    ""name"": ""Shooting"",
                     ""type"": ""Button"",
-                    ""id"": ""6ddef756-3264-42a7-af7a-f62002a1a4fa"",
+                    ""id"": ""18673c04-2850-40b5-bad6-c702bd349204"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Shooting"",
-                    ""type"": ""Button"",
-                    ""id"": ""18673c04-2850-40b5-bad6-c702bd349204"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""MouseMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""8416d4f6-8d10-417b-8a66-898fecec8853"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -168,23 +168,23 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3826805d-03eb-4da3-b9ad-b69d2a050027"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KM"",
-                    ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""25878a02-4efd-437c-a400-eab7f84f5981"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KM"",
                     ""action"": ""Shooting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fe0c790-d0f1-4fea-82c7-7cfcec7758d8"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -213,8 +213,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_Shooting = m_Player.FindAction("Shooting", throwIfNotFound: true);
+        m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,15 +277,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_Shooting;
+    private readonly InputAction m_Player_MouseMove;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @Shooting => m_Wrapper.m_Player_Shooting;
+        public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -298,12 +298,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Zoom.started += instance.OnZoom;
-            @Zoom.performed += instance.OnZoom;
-            @Zoom.canceled += instance.OnZoom;
             @Shooting.started += instance.OnShooting;
             @Shooting.performed += instance.OnShooting;
             @Shooting.canceled += instance.OnShooting;
+            @MouseMove.started += instance.OnMouseMove;
+            @MouseMove.performed += instance.OnMouseMove;
+            @MouseMove.canceled += instance.OnMouseMove;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -311,12 +311,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Zoom.started -= instance.OnZoom;
-            @Zoom.performed -= instance.OnZoom;
-            @Zoom.canceled -= instance.OnZoom;
             @Shooting.started -= instance.OnShooting;
             @Shooting.performed -= instance.OnShooting;
             @Shooting.canceled -= instance.OnShooting;
+            @MouseMove.started -= instance.OnMouseMove;
+            @MouseMove.performed -= instance.OnMouseMove;
+            @MouseMove.canceled -= instance.OnMouseMove;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -346,7 +346,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnZoom(InputAction.CallbackContext context);
         void OnShooting(InputAction.CallbackContext context);
+        void OnMouseMove(InputAction.CallbackContext context);
     }
 }
