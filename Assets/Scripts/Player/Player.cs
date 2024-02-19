@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
 
     public GameObject muzzleFlashPrefab;
 
+    public float mouseRotationSpeed = 0.3f;
+    private float rotationY;
+
     private void Awake()
     {
         inputActions = new();
@@ -63,7 +66,11 @@ public class Player : MonoBehaviour
 
     private void MouseMove(InputAction.CallbackContext context)
     {
-        //SetInput(context.ReadValue<Vector2>(), !context.canceled); 비슷하게
+        Vector2 delta = context.ReadValue<Vector2>();
+
+        rotationY += delta.x * mouseRotationSpeed;
+
+        transform.rotation = Quaternion.Euler(0.0f, rotationY, 0.0f);
     }
 
     private void OnShootingInput(InputAction.CallbackContext context)
