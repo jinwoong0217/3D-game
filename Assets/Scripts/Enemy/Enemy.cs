@@ -6,17 +6,26 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Rigidbody rigid;
-    private CapsuleCollider capsuleCollider;
-    public Transform target;
-
     private bool isFollowingPlayer = false;
+    [Header("이동 관련")]
     public float moveSpeed = 4.0f;
     public float rotationSpeed = 180.0f;
+
+    readonly int onTarget = Animator.StringToHash("onTarget");
+    readonly int canAttack = Animator.StringToHash("canAttack");
+
+    Rigidbody rigid;
+    BoxCollider boxCollider;
+    CapsuleCollider capsuleCollider;
+    public Transform target;
+    public Transform attackRange;
+
+    Animator animator;
 
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
@@ -24,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         if (isFollowingPlayer)
         {
+            animator.SetBool(onTarget, true);
             FollowPlayer();
         }
         else
@@ -32,7 +42,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void MoveRandom()
+    void MoveRandom()
     {
         if (Random.value < 0.25f)
         {
@@ -55,7 +65,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void FollowPlayer()
+    void FollowPlayer()
     {
         Vector3 dir = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dir);
@@ -75,7 +85,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isFollowingPlayer)
@@ -83,7 +92,12 @@ public class Enemy : MonoBehaviour
             isFollowingPlayer = true;
             FollowPlayer(); 
         }
+        if (other.CompareTag("HitArea"))
+        {
+            animator.SetBool(canAttack, true);
+        }
     }
+
 }
 
 

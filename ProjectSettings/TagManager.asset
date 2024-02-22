@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Enemy
   - Wall
+  - EnemyAttackRange
+  - HitArea
   layers:
   - Default
   - TransparentFX

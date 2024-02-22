@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,20 +12,19 @@ public class Player : MonoBehaviour
     Rigidbody rigid;
     Animator animator;
 
+    [Header("플레이어 이동속도")]
     float moveDirection = 0.0f;
-
     public float moveSpeed = 2.0f;
-
     float rotateDirection = 0.0f;
-
     public float rotateSpeed = 90.0f;
 
     public Transform firePosition;
     public Transform crosshair;
-    private Transform playerTransform;
-
     public GameObject muzzleFlashPrefab;
 
+    Transform playerTransform;
+
+    [Header("마우스 감도")]
     public float mouseRotationSpeed = 0.3f;
     private float rotationY;
 
@@ -32,13 +33,21 @@ public class Player : MonoBehaviour
         inputActions = new();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        //GameObject rifle = transform.GetChild(7).gameObject;
-        //firePosition = rifle.transform.GetChild(0);
-        //firePosition = GameObject.Find("Fire");
 
         playerTransform = transform;
 
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        crosshair.position = playerTransform.position;
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+        Rotate();   
     }
 
     private void OnEnable()
@@ -51,7 +60,6 @@ public class Player : MonoBehaviour
         inputActions.Player.MouseMove.performed += MouseMove;
         inputActions.Player.MouseMove.canceled += MouseMove;
     }
-
 
     private void OnDisable()
     {
@@ -97,22 +105,9 @@ public class Player : MonoBehaviour
         Instantiate(muzzleFlashPrefab, firePosition.position, firePosition.rotation);
     }
 
-
-
     private void OnMoveInput(InputAction.CallbackContext context)
     {
         SetInput(context.ReadValue<Vector2>(), !context.canceled);
-    }
-
-    private void Update()
-    {
-        crosshair.position = playerTransform.position;
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-        Rotate();   
     }
 
     void SetInput(Vector2 input, bool isMove)
