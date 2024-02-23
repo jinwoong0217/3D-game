@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
 
     [Header("마우스 감도")]
     public float mouseRotationSpeed = 0.3f;
-    private float rotationY;
+    float rotationY;
+    float rotationX;
 
     private void Awake()
     {
@@ -77,8 +78,10 @@ public class Player : MonoBehaviour
         Vector2 delta = context.ReadValue<Vector2>();
 
         rotationY += delta.x * mouseRotationSpeed;
+        rotationX -= delta.y * mouseRotationSpeed;
 
-        transform.rotation = Quaternion.Euler(0.0f, rotationY, 0.0f);
+        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
+        
     }
 
     private void OnShootingInput(InputAction.CallbackContext context)
@@ -98,7 +101,12 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                Destroy(hit.collider.gameObject); 
+                Destroy(hit.collider.gameObject);
+                ScoreBoard scoreBoard = FindObjectOfType<ScoreBoard>();
+                if (scoreBoard != null)
+                {
+                    scoreBoard.KillEnemy();
+                }
             }
         }
 
@@ -118,7 +126,10 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        rigid.MovePosition(rigid.position + Time.fixedDeltaTime * moveSpeed * moveDirection * transform.forward);     
+        Vector3 dir = transform.forward * moveDirection + transform.right * rotateDirection;
+        dir.Normalize();
+
+        rigid.MovePosition(rigid.position + Time.fixedDeltaTime * moveSpeed * dir);
     }
 
     void Rotate()
@@ -126,6 +137,7 @@ public class Player : MonoBehaviour
         Quaternion rotate = Quaternion.AngleAxis(Time.fixedDeltaTime * rotateSpeed * rotateDirection, transform.up);
         rigid.MoveRotation(rigid.rotation * rotate);
     }
+
 
     private void OnDrawGizmosSelected()
     {

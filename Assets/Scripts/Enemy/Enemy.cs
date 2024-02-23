@@ -17,16 +17,26 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     BoxCollider boxCollider;
     CapsuleCollider capsuleCollider;
-    public Transform target;
+    Transform target;
     public Transform attackRange;
 
     Animator animator;
+
+    //
+    float range = 3.0f;
 
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player.transform;
+        }
+
     }
 
     private void FixedUpdate()
@@ -70,7 +80,9 @@ public class Enemy : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.fixedDeltaTime);
-        transform.Translate(Vector3.forward * moveSpeed * Time.fixedDeltaTime);
+
+        if(dir.magnitude >= range)
+            transform.Translate(Vector3.forward * moveSpeed * Time.fixedDeltaTime);
 
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
