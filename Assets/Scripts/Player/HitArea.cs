@@ -17,7 +17,7 @@ public class HitArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyAttackRange"))
+        if (other.CompareTag("EnemyAttackRange"))  // 적의 공격범위 콜라이더를 태그로 지정하여 찾게함
         {
             float damage = 10.0f;
             currentHP -= damage;
@@ -27,7 +27,7 @@ public class HitArea : MonoBehaviour
 
     void UpdateHPBar()
     {
-        float hpRoll = (float)currentHP / maxHP;
+        float hpRoll = (float)currentHP / maxHP;  // 실시간으로 Hp체력을 업데이트해줌
         HPBar.value = hpRoll;
     }
 }

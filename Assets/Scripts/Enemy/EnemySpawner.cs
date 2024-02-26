@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class EnemySpawner : RecycleObject
 {
+    Coroutine spawnCoroutine;
+
     public GameObject enemyPrefab;
+    [Header("스폰포인트 지정")]
     public Transform spawnPoint;
+    [Header("스폰 시간")]
     public float spawnInterval = 1.0f;
 
-    private Coroutine spawnCoroutine;
-
-    private Vector3 mapMin = new Vector3(-40, 0, -40);
-    private Vector3 mapMax = new Vector3(40, 0, 40);
+    /// <summary>
+    /// 일정 구역안에 랜덤한 위치에서 스폰되게 좌표를 지정해둠
+    /// </summary>
+    Vector3 mapMin = new Vector3(-40, 0, -40);
+    Vector3 mapMax = new Vector3(40, 0, 40);
 
     protected override void OnEnable()
     {

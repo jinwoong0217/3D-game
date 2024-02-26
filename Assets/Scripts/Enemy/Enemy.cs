@@ -6,24 +6,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private bool isFollowingPlayer = false;
-    [Header("이동 관련")]
-    public float moveSpeed = 4.0f;
-    public float rotationSpeed = 180.0f;
-
-    readonly int onTarget = Animator.StringToHash("onTarget");
-    readonly int canAttack = Animator.StringToHash("canAttack");
-
     Rigidbody rigid;
     BoxCollider boxCollider;
     CapsuleCollider capsuleCollider;
     Transform target;
-    public Transform attackRange;
-
     Animator animator;
 
-    //
-    float range = 3.0f;
+    bool isFollowingPlayer = false;
+    
+    [Header("이동 관련")]
+    public float moveSpeed = 4.0f;
+    public float rotationSpeed = 180.0f;
+
+    /// <summary>
+    /// 파라미터를 해시값으로 변환
+    /// </summary>
+    readonly int onTarget = Animator.StringToHash("onTarget");
+    readonly int canAttack = Animator.StringToHash("canAttack");
+
+    public Transform attackRange;
+
+    float range = 3.0f;  // 적과 나 사이의 거리
 
     private void Start()
     {
@@ -52,6 +55,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 랜덤한 위치로 스스로 움직이는 함수
+    /// </summary>
     void MoveRandom()
     {
         if (Random.value < 0.25f)
@@ -75,6 +81,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 타겟을 쫒아가는 함수
+    /// </summary>
     void FollowPlayer()
     {
         Vector3 dir = target.position - transform.position;

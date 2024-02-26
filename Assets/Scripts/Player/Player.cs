@@ -11,18 +11,17 @@ public class Player : MonoBehaviour
     PlayerInputActions inputActions;
     Rigidbody rigid;
     Animator animator;
+    Transform playerTransform;
 
-    [Header("플레이어 이동속도")]
-    float moveDirection = 0.0f;
+    [Header("플레이어 이동속도 및 회전속도")]
     public float moveSpeed = 2.0f;
-    float rotateDirection = 0.0f;
+    float moveDirection = 0.0f;
     public float rotateSpeed = 90.0f;
+    float rotateDirection = 0.0f;
 
     public Transform firePosition;
     public Transform crosshair;
     public GameObject muzzleFlashPrefab;
-
-    Transform playerTransform;
 
     [Header("마우스 감도")]
     public float mouseRotationSpeed = 0.3f;
@@ -36,8 +35,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerTransform = transform;
-
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;  // 게임창에 마우스 커서 안보임
     }
 
     private void Update()
@@ -73,9 +71,13 @@ public class Player : MonoBehaviour
         inputActions.Player.Disable();
     }
 
+    /// <summary>
+    /// 마우스 움직임에 따라 카메라가 회전함
+    /// </summary>
+    /// <param name="context"></param>
     private void MouseMove(InputAction.CallbackContext context)
     {
-        Vector2 delta = context.ReadValue<Vector2>();
+        Vector2 delta = context.ReadValue<Vector2>();  // inputActions에 마우스 path를 delta로 설정 액션 타입 value vector2 
 
         rotationY += delta.x * mouseRotationSpeed;
         rotationX -= delta.y * mouseRotationSpeed;
@@ -84,6 +86,10 @@ public class Player : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 마우스 좌클릭으로 총을 쏘게 함
+    /// </summary>
+    /// <param name="context"></param>
     private void OnShootingInput(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -92,6 +98,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 총 쏘는 모습 구현 함수 레이캐스트와 파티클을 활용하여 총 쏘는 모습을 구현함
+    /// </summary>
     private void Shooting()
     {
         RaycastHit hit;
@@ -139,7 +148,7 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()  // Ray의 방향을 체크하기 위해 그림
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(firePosition.position, firePosition.forward * 50f); 

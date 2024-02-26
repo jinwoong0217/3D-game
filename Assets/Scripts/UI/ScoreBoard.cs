@@ -7,12 +7,16 @@ using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour
 {
-    public int totalScore = 5;
-    private int enemyCount = 0;
-
     public TextMeshProUGUI scoreText;
     public Canvas EndCanvas;
+    
+    [Header("전체 스코어")]
+    public int totalScore = 5;
+    int enemyCount = 0;
 
+    /// <summary>
+    /// 적을 죽이면 스코어가 올라가는 함수
+    /// </summary>
     public void KillEnemy()
     {
         enemyCount++;
