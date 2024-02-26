@@ -11,6 +11,7 @@ public class ScoreBoard : MonoBehaviour
     private int enemyCount = 0;
 
     public TextMeshProUGUI scoreText;
+    public Canvas EndCanvas;
 
     public void KillEnemy()
     {
@@ -19,7 +20,8 @@ public class ScoreBoard : MonoBehaviour
 
         if(enemyCount >= totalScore)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
+            EndCanvas.gameObject.SetActive(true);
         }
     }
 
