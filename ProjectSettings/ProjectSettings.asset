@@ -855,11 +855,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: d9467efc-c7e3-424d-a974-ef8c26ef88cd
+  cloudProjectId: a82009a2-929a-496d-a670-0521fa2607ef
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 03_3D_Basic
-  organizationId: go2665
+  projectName: FPS practice
+  organizationId: jinwoong0326
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
